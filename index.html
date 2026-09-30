@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" data-url="csp" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self' https://api.osso.global https://watch.osso.global; base-uri 'self'; form-action 'self'">
 <title>Osso Export Classifier: free EU dual-use export classification</title>
 <script type="application/ld+json" data-url="jsonld">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"OSSO GLOBAL","alternateName":"Osso Export","url":"https://osso.global/","logo":"https://osso.global/img/brand/osso-mark.svg"},{"@type":"WebApplication","name":"Osso Export Classifier","url":"https://osso.global/","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Classifies a technology under Annex I of Regulation (EU) 2021/821, the EU dual-use list, and shows which export authorisation applies.","publisher":{"@type":"Organization","name":"OSSO GLOBAL"}},{"@type":"WebSite","name":"Osso Export","url":"https://osso.global/"}]}</script>
-<meta name="description" content="Describe a technology and get it classified under Regulation (EU) 2021/821, then see which export authorisation applies. Every quote verbatim, checked against the cited provision.">
+<meta name="description" content="Free tool to classify a product under the EU dual-use list (Annex I, Regulation 2021/821), with verbatim citations and the export authorisation that applies.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Osso Export">
 <meta property="og:title" content="Osso Export Classifier">
@@ -121,6 +121,27 @@
 
 <button class="sheet-tab" type="button" id="sheet-tab" aria-controls="panel-case" aria-expanded="false"><span class="grab" aria-hidden="true"></span><span id="sheet-summary"><span class="label">Case file</span> · empty</span><span class="label">Open</span></button>
 
+<section id="about" class="accuracy" aria-labelledby="about-h">
+  <h2 id="about-h" class="label">What it does</h2>
+  <p>Annex I of Regulation (EU) 2021/821 is the European Union's list of dual-use items: goods, software and
+    technology that have civilian uses but could also serve military ends, and that need an export authorisation
+    to leave the EU. The Osso Export Classifier tells you where a product stands against that list.</p>
+  <p>You describe your product in plain words. The assistant asks the questions the regulation turns on, such as
+    a frequency, a resolution, a depth rating or an output power, and you answer them from the datasheet. You get one
+    card with one of three outcomes: listed, not listed, or needs expert review. Every provision the answer rests on
+    is quoted word for word from the consolidated text of the regulation, and the card says which export authorisation
+    applies. A memo of the case can be downloaded.</p>
+  <h3>Common questions</h3>
+  <p><strong>What is a dual-use item?</strong> An item that can be used for both civilian and military purposes.
+    Annex I of Regulation (EU) 2021/821 lists them by category, from nuclear materials to information security.</p>
+  <p><strong>What does "needs expert review" mean?</strong> The description did not settle the question, for example
+    because a figure is missing. The tool does not guess: it says so and shows what to check.</p>
+  <p><strong>Is it free?</strong> Yes. There are 5 free chats a day, and browsing the whole of Annex I needs no chat.</p>
+  <p><strong>Is it legal advice?</strong> No. Every result must be reviewed by a qualified professional before it is
+    relied on. How often the tool is right, and where it is not, is published in
+    <a href="https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md">the benchmark</a>.</p>
+</section>
+
 <section id="security" class="accuracy" aria-labelledby="sec-h">
   <h2 id="sec-h" class="label">Your data and security</h2>
   <ul>
@@ -198,7 +219,7 @@
 </dialog>
 
 <footer>
-  <p><a href="#security">Your data and security</a> · <a href="#accuracy">How accurate is it?</a> · <button type="button" class="linkish" data-waitlist>Pro: join the waitlist</button> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md">Benchmark</a></p>
+  <p><a href="#about">What it does</a> · <a href="#security">Your data and security</a> · <a href="#accuracy">How accurate is it?</a> · <button type="button" class="linkish" data-waitlist>Pro: join the waitlist</button> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md">Benchmark</a></p>
   <p>Indicative triage, not legal advice. Annex I text © European Union (<a href="https://eur-lex.europa.eu/">EUR-Lex</a>), kept current by <a href="https://watch.osso.global/" data-url="watch" target="_blank" rel="noopener">Osso Export Watch</a>. Built by <a href="https://www.linkedin.com/in/ricardo-ossorio" target="_blank" rel="noopener">Ricardo Álvarez-Ossorio Castro</a>.</p>
 </footer>
 

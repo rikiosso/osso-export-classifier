@@ -1,0 +1,24 @@
+# Osso Export Classifier
+
+> A free web tool that classifies a product or technology against Annex I of Regulation (EU) 2021/821, the EU dual-use control list, and shows which export authorisation applies. Every result quotes the regulation word for word. Not legal advice: results must be reviewed by a qualified professional.
+
+Live at https://osso.global/. Run by OSSO GLOBAL TECH, S.L. (Madrid). The classifier's code is proprietary; the page and the benchmark are public.
+
+## What it does
+
+- You describe a product in plain words and answer a few questions from its datasheet.
+- The result is one of three outcomes: listed, not listed, or needs expert review.
+- Each provision the answer rests on is quoted verbatim from the consolidated regulation, and the card names the export authorisation that applies.
+- All of Annex I can be browsed and searched without starting a chat.
+- Free: 5 chats a day per visitor.
+
+## Accuracy
+
+- [Benchmark](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md): 100 products, the method, every case with its expected answer, and every run. The latest run got 92 of 100 right; the 8 misses were all "needs expert review" where a definite answer was expected, and none was a wrong listed or not-listed result.
+- [Known failures](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/known-failures.md): every miss and what was done about it.
+- [Threshold tables](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/tables.md): the product families where fixed thresholds from the regulation decide the answer, with an example question and case for each.
+
+## Related
+
+- [Osso Export Watch](https://watch.osso.global/): tracks changes to the EU dual-use list.
+- [Privacy](https://osso.global/privacy.html) and [terms](https://osso.global/terms.html).
