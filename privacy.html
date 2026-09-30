@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'self'; form-action 'self'">
+<title>Privacy · Osso Export Classifier</title>
+<link rel="canonical" href="https://osso.global/privacy.html" data-url="site:privacy.html">
+<link rel="icon" type="image/png" href="osso-favicon.png">
+<link rel="stylesheet" href="style.css?v=28">
+</head>
+<body class="legal">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="./" aria-label="Osso Export Classifier, home">
+      <img class="mark" src="img/brand/osso-mark.svg" alt="" width="30" height="30">
+      <img class="wordmark" src="img/brand/osso-wordmark.svg" alt="" width="120" height="20">
+      <span class="export" aria-hidden="true">Export</span>
+    </a>
+    <nav class="topnav" aria-label="Osso Export">
+      <a href="https://watch.osso.global/" data-url="watch">Watch</a>
+      <a href="./">Classifier</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<h1>Privacy notice</h1>
+
+<p>This notice explains how the Osso Export Classifier handles personal data, under Article 13 of the General Data Protection Regulation (Regulation (EU) 2016/679). It describes what the tool's code does.</p>
+
+<h2>Who is responsible</h2>
+<p>The controller is OSSO GLOBAL TECH, S.L., NIF B75928366, Glorieta de Bilbao 1, 6º izquierda, 28010 Madrid, Spain, registered in the Registro Mercantil de Madrid. Contact: <a href="mailto:privacy@osso.global">privacy@osso.global</a>.</p>
+
+<h2>What is processed, and why</h2>
+<ul>
+  <li><strong>What you type</strong>, with the conversation so far, to answer your query: each message is sent to this project's backend (a Cloudflare Worker) and from there to Anthropic's API, which generates the reply. Please do not enter personal data.</li>
+  <li><strong>Your IP address</strong>, to prevent abuse and runaway cost: the Worker stores daily counters of conversations and requests under a hash of your IP address combined with a secret value (SHA-256), never the address itself. It also reads the country Cloudflare derives from your IP address, to refuse the assistant where it may not be offered; it does not store it.</li>
+  <li><strong>Technical logs</strong>, to keep the service working: see "Logs" below.</li>
+</ul>
+<p>The legal basis for all of this is the controller's legitimate interest (Article 6(1)(f) GDPR) in answering the queries visitors choose to send and in preventing abuse and runaway cost of a free public tool. No decision producing legal effects concerning you is made by automated means; the tool's answers are indicative and must be reviewed by a qualified professional before any use.</p>
+
+<h2 id="outcome-data">Outcome data, kept by default</h2>
+<p>When a conversation ends on a classification, the Worker keeps a short record of the outcome, under the case reference shown on the memo: the Annex I entries found, the status, the Annex I categories, the destination country code and the licensing outcome if you answered the licensing questions, the number of turns, the timings and models of each step, the versions of the prompt and of the control list, and the date. The record holds no text that you or the assistant wrote and no IP address, and is not linked to you. It is used to measure and improve the tool's accuracy, on the controller's legitimate interest (Article 6(1)(f) GDPR). It is kept for 12 months from its last update.</p>
+
+<h2 id="feedback">Feedback</h2>
+<p>Under every classification you can say whether it was right. Your yes or no is added to the outcome record above. If you answer no, you can add a short text; it is kept only if you write it, with the same record, for the same 12 months, to correct the tool. Please do not include personal data in it. The legal basis is your consent (Article 6(1)(a) GDPR), given by sending it; you can ask for it to be deleted by writing to <a href="mailto:privacy@osso.global">privacy@osso.global</a> with the case reference.</p>
+
+<h2 id="saved-cases">Saved cases, only if you choose</h2>
+<p>The memo has a box, unticked unless you tick it: "Save this case anonymously to help improve Osso Export". Only if you tick it, the Worker keeps your description and your answers, with the questions they answered, under the case reference. It never keeps your IP address or an email address with them. They are used to test and improve the tool. The legal basis is your consent (Article 6(1)(a) GDPR). They are kept for 12 months. Unticking the box while the page is open deletes them at once; afterwards, write to <a href="mailto:privacy@osso.global">privacy@osso.global</a> quoting the case reference, and they will be deleted. Please do not tick the box if what you typed contains personal data or confidential information.</p>
+
+<h2 id="waitlist">The Pro waitlist</h2>
+<p>If you join the waitlist for Osso Export Classifier Pro, the Worker stores your email address and, if you give it, your company, with the date and time you agreed and the version of this notice. Nothing else from the form is kept, and no email is sent when you join.</p>
+<ul>
+  <li><strong>Purpose</strong>: to write to you about Pro, when it opens, and to offer you early access. Your details are not added to any other list, and are not shared with or sold to anyone.</li>
+  <li><strong>Legal basis</strong>: your consent (Article 6(1)(a) GDPR), given by ticking the box on the form. You can withdraw it at any time by writing to <a href="mailto:privacy@osso.global">privacy@osso.global</a>, and your record will be deleted. Withdrawing does not affect what was done before.</li>
+  <li><strong>Where</strong>: in Cloudflare's key-value store, as described under "Recipients" below.</li>
+  <li><strong>How long</strong>: until Pro launches and you have been told, or until you withdraw your consent, whichever comes first.</li>
+  <li><strong>Abuse prevention</strong>: to stop automated signups, the Worker counts signups per day under the same salted hash of your IP address described above, never the address itself. The counter expires after 26 hours. The legal basis for this counter is the controller's legitimate interest (Article 6(1)(f) GDPR) in keeping the list free of abuse.</li>
+</ul>
+
+<h2>Recipients and transfers outside the EU</h2>
+<ul>
+  <li><strong>Anthropic</strong> (the AI model), under its Data Processing Addendum (effective 24 February 2025), which incorporates the EU Standard Contractual Clauses, Modules Two and Three. Anthropic deletes API inputs and outputs within 30 days, save exceptions it describes (for example where the law requires longer retention); it keeps them for up to 2 years if its safety systems flag them as violating its Usage Policy. Its <a href="https://www.anthropic.com/legal/commercial-terms">Commercial Terms</a> (effective 17 June 2025, section B) say that "Anthropic may not train models on Customer Content from Services". By default Anthropic may process data in the United States, Europe, Asia and Australia, and stores it in the United States. See <a href="https://www.anthropic.com/legal/data-processing-addendum">Anthropic's DPA</a>, <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data">its retention article</a> and <a href="https://www.anthropic.com/legal/privacy">its privacy policy</a>.</li>
+  <li><strong>Cloudflare</strong> (the Worker and its key-value store), under its customer Data Processing Addendum (version 6.4, effective 3 April 2026). Cloudflare is certified under the EU-U.S. Data Privacy Framework and relies on Standard Contractual Clauses if that lapses. See <a href="https://www.cloudflare.com/cloudflare-customer-dpa/">Cloudflare's DPA</a> and <a href="https://www.cloudflare.com/privacypolicy/">privacy policy</a>.</li>
+  <li><strong>GitHub</strong> (hosting of this page and of the control-list data), under its privacy statement (effective 27 April 2026). GitHub is certified under the EU-U.S. Data Privacy Framework and also relies on Standard Contractual Clauses. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</li>
+</ul>
+<p>The page loads no other third-party resource: its fonts are served from this site.</p>
+
+<h2>How long</h2>
+<ul>
+  <li>The conversation is kept only in your browser, in the open page's memory, and re-sent with each message; the backend does not store its text unless you tick "Save this case". Reloading or closing the page discards it.</li>
+  <li>The hashed IP counters expire after 26 hours.</li>
+  <li>Waitlist signups are kept until Pro launches or you withdraw your consent (see "The Pro waitlist").</li>
+  <li>Outcome records, with any feedback, are kept for 12 months from their last update; saved cases for 12 months, or until you untick the box or ask for their deletion.</li>
+  <li>Spend totals, which contain amounts only, expire after 26 hours (daily) and 32 days (monthly).</li>
+  <li>Anthropic, Cloudflare and GitHub keep data under their own policies, linked above.</li>
+</ul>
+
+<h2>Logs</h2>
+<p>The Worker writes technical log lines: timings, which checks fired, and validation errors. They do not include your IP address or your messages, but a validation error can quote a short part of the model's draft, which may reflect what you typed. This project does not switch on Cloudflare's stored Workers Logs, so these lines are only visible live, to the operator.</p>
+
+<h2>Cookies and storage</h2>
+<p>There are no accounts. The page and the Worker set no cookies. The page stores nothing in your browser, with one exception: a tester link (<code>?tester=…</code>) keeps its key in the tab's session storage until the tab is closed.</p>
+
+<h2>Your rights</h2>
+<p>You may ask for access to, rectification or erasure of your personal data, restriction of its processing, and object to processing based on legitimate interest, by writing to <a href="mailto:privacy@osso.global">privacy@osso.global</a>. Note that the controller holds no copy of your conversation unless you chose to save it, and cannot link a hashed counter or an outcome record to you; to ask about a saved case or feedback, quote its case reference. You also have the right to lodge a complaint with the Spanish supervisory authority, the Agencia Española de Protección de Datos (<a href="https://www.aepd.es/">aepd.es</a>).</p>
+</main>
+
+<footer>
+  <p><a href="./">Back to the classifier</a> · <a href="terms.html">Terms of use</a> · <a href="https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md">Benchmark</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+/* Osso Export Classifier. OSSO GLOBAL brand book, web style "Predominancia
+   espresso": an espresso page; Crystal white cards, case file and memo with
+   Espresso and Suit text (operator's taste notes, 28-09-2026); Tenor Sans for
+   the wordmark, title, labels and nav (tracked capitals), Arimo for text,
+   regular weight only; rounded rectangles; links always underlined.
+   Layout: concept A, the two-column workspace (operator's pick, 28-09-2026).
+   Every colour pair is checked by design/contrast.mjs (WCAG AA). */
+
+/* Fonts served from this site, not Google, so a visit contacts no third
+   party. Both SIL Open Font License 1.1; the licences sit in fonts/. */
+@font-face { font-family: "Tenor Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/TenorSans-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Arimo"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("fonts/Arimo-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Arimo"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("fonts/Arimo-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Arimo"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/Arimo-Italic-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Arimo"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/Arimo-Italic-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* ---------- tokens: the page (shared with Osso Export Watch) ---------- */
+:root {
+  color-scheme: dark;
+  --espresso: #3f342f; --steel: #d1d1d1; --crystal: #ffffff; --suit: #1b1c1c;
+  --steel-muted: rgba(209, 209, 209, .84);
+  --line: rgba(209, 209, 209, .22);
+  --tint: rgba(255, 255, 255, .07);
+  --hairline: rgba(209, 209, 209, .18); /* header and footer against the content, as on the watcher */
+  --display: "Tenor Sans", Arimo, Helvetica, Arial, sans-serif;
+  --sans: Arimo, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --edge: #978f8a; --sunk: #2d2522;
+  --listed: #e8958c; --clear: #9fc8a7; --caution: #dcb772;
+  --radius: 14px; --radius-sm: 10px;
+  /* the logo: --cap is the height of OSSO's letters; EXPORT's capitals match
+     it (Tenor Sans capitals are .707 of the font size), and the mark keeps a
+     clear space of one letter height before the O (brand book: no touching) */
+  --cap: 19px;
+  --topbar-h: 64px;
+  /* measured by app.js: what the sticky bars cover, so nothing scrolls under them */
+  --bars-top: 8.5rem;
+  --bars-bottom: 9rem;
+}
+html { scroll-padding-top: calc(var(--bars-top) + .75rem); scroll-padding-bottom: calc(var(--bars-bottom) + .75rem); }
+/* ---------- tokens: white paper surfaces ----------
+   Cards, the case file, the memo, notices and the Annex I tree are white with
+   Espresso and Suit text. The same component styles apply everywhere: these
+   tokens are redefined on each white surface, so a button there is dark with
+   white text, a quote sits in a warm light well, and the outcome colours are
+   darkened to keep AA on white. */
+.paper, .panel, .memo, .category, .session-notice, .msg.assistant {
+  --steel: #3f342f; --crystal: #1b1c1c; --suit: #ffffff;
+  --steel-muted: rgba(63, 52, 47, .8);
+  --line: rgba(63, 52, 47, .12);
+  --tint: rgba(63, 52, 47, .05);
+  --sunk: #f6f3f0; --edge: #857a74;
+  --listed: #a8392f; --clear: #2e6b3c; --caution: #85600f;
+  background: var(--suit); color: var(--steel); /* a computed colour inherits as is: reset it here */
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--espresso); color: var(--steel); font: 400 1rem/1.6 var(--sans);
+       display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+b, strong, h1, h2, h3, h4, th { font-weight: 400; }
+strong { color: var(--crystal); }
+a { color: var(--crystal); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--crystal); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--steel); color: var(--suit); }
+button, input, select, textarea { font: inherit; color: inherit; }
+.hidden { display: none !important; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.offscreen { position: fixed; left: -9999px; opacity: 0; }
+.label { font-family: var(--display); text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; color: var(--crystal); margin: 0; }
+.code { font-family: var(--mono); font-size: .88em; color: var(--crystal); }
+.meta { color: var(--steel-muted); font-size: .85rem; }
+
+/* ---------- the top bar: the full logo, then Watch and Classifier ---------- */
+.topbar { position: sticky; top: 0; z-index: 30; background: var(--espresso); border-bottom: 1px solid var(--hairline); } /* the page colour, a hairline (operator, 28-09-2026) */
+.topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+                max-width: 80rem; margin: 0 auto; padding: 0 2rem; min-height: var(--topbar-h); }
+.brand { display: flex; align-items: center; text-decoration: none; color: #d0d0d0; flex: none; }
+.brand .mark { height: calc(var(--cap) * 1.44); width: auto; display: block; margin-right: var(--cap); }
+.brand .wordmark { height: calc(var(--cap) * 1.023); width: auto; display: block; }
+.brand .export { font-family: var(--display); text-transform: uppercase; white-space: nowrap; line-height: 1; color: #d0d0d0;
+                 font-size: calc(var(--cap) / .707); letter-spacing: .59em; margin-left: .85em; }
+.topnav { display: flex; gap: .25rem; }
+.topnav a { font-family: var(--display); color: var(--steel); text-decoration: none; font-size: .8rem;
+            letter-spacing: .16em; text-transform: uppercase; padding: .7rem .6rem; border-bottom: 1px solid transparent; }
+.topnav a:hover { color: var(--crystal); border-bottom-color: var(--steel); }
+.topnav a[aria-current] { color: var(--crystal); border-bottom-color: var(--crystal); }
+
+/* ---------- the top menu: Watch, Classifier, Browse Annex I (operator, 29-09-2026) ---------- */
+.menu { position: relative; }
+.menu > summary { list-style: none; cursor: pointer; font-family: var(--display); text-transform: uppercase; letter-spacing: .16em;
+                  font-size: .8rem; color: var(--crystal); padding: .9rem .8rem; border-bottom: 1px solid var(--crystal);
+                  display: flex; align-items: center; gap: .6rem; min-height: 44px; }
+.menu > summary::-webkit-details-marker { display: none; }
+.menu > summary::after { content: ""; width: .45rem; height: .45rem; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor;
+                         transform: rotate(45deg) translateY(-2px); }
+.menu[open] > summary::after { transform: rotate(-135deg) translateY(-1px); }
+.menu-list { position: absolute; right: 0; top: calc(100% + .4rem); z-index: 50; min-width: 15rem; padding: .4rem;
+             background: #ffffff; border-radius: var(--radius-sm); box-shadow: 0 12px 30px rgba(0, 0, 0, .35); display: grid; }
+.menu-list a, .menu-list button { display: block; width: 100%; text-align: left; padding: .75rem .9rem; border: 0; border-radius: 8px;
+             background: transparent; color: #3f342f; text-decoration: none; cursor: pointer; font-family: var(--display);
+             text-transform: uppercase; letter-spacing: .14em; font-size: .76rem; min-height: 44px; }
+.menu-list a:hover, .menu-list button:hover { background: #f6f3f0; }
+.menu-list button.on { color: #1b1c1c; background: #f6f3f0; }
+.menu-list button.suggest:not(.on) { box-shadow: inset 0 0 0 2px var(--caution); }
+
+/* ---------- the page head, as on Osso Export Watch ---------- */
+.page-head-inner { max-width: 80rem; margin: 0 auto; padding: 2.6rem 2rem 1.6rem; }
+.page-head h1 { font-family: var(--display); text-transform: uppercase; letter-spacing: .2em; color: var(--crystal);
+                font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.25; margin: 0 0 .9rem; font-weight: 400; }
+.page-sub { margin: 0; max-width: 46rem; color: var(--steel); }
+
+/* ---------- buttons and fields ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .55rem 1.25rem;
+       border-radius: var(--radius-sm); cursor: pointer; border: 1px solid var(--crystal); background: var(--crystal); color: var(--suit);
+       font-family: var(--display); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; }
+.btn:hover { background: var(--steel); border-color: var(--steel); }
+.btn.ghost { background: transparent; color: var(--steel); border-color: var(--edge); }
+.btn.ghost:hover { color: var(--crystal); border-color: var(--crystal); }
+.btn:disabled { opacity: .5; cursor: default; }
+.field { width: 100%; padding: .75rem .9rem; border-radius: var(--radius-sm); border: 1px solid var(--edge); background: var(--suit); color: var(--crystal); }
+.field::placeholder { color: var(--steel-muted); }
+.field:focus { border-color: var(--crystal); }
+.field:focus-visible { outline: 2px solid var(--crystal); outline-offset: 1px; }
+select.field { background: var(--suit); }
+.linkish { border: 0; background: none; padding: 0 .2rem; color: var(--crystal); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: .88rem; min-height: 24px; }
+
+/* ---------- the workspace ---------- */
+main { width: 100%; max-width: 80rem; margin: 0 auto; padding: .6rem 2rem 3rem; flex: 1; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3rem; align-items: start; }
+#panel-chat { display: flex; flex-direction: column; gap: 1.4rem; min-height: calc(100vh - 13rem); }
+.chat-scroll { display: flex; flex-direction: column; gap: 1.4rem; position: relative; }
+body:not(.started) .workspace { grid-template-columns: minmax(0, 46rem); }
+body:not(.started) #panel-case, body:not(.started) .sheet-tab { display: none; }
+body:not(.started) .log:empty { display: none; }
+/* before a case, the start fills the screen: the data, accuracy and gaps sections
+   sit below the fold, reached from the links (operator, 29-09-2026) */
+body:not(.started) main { min-height: calc(100vh - var(--bars-top) - var(--head-h, 0px)); min-height: calc(100dvh - var(--bars-top) - var(--head-h, 0px)); }
+/* Wide screens (operator, 29-09-2026): the interview is a column the height of
+   the screen that scrolls inside itself, beside the case file, so starting a
+   case or answering never pulls the page down to the sections below. */
+@media (min-width: 901px) {
+  #panel-chat { position: sticky; top: calc(var(--bars-top) + 1.25rem); gap: 0; min-height: 0;
+                height: calc(100vh - var(--bars-top) - var(--head-h, 0px) - 2rem); height: calc(100dvh - var(--bars-top) - var(--head-h, 0px) - 2rem); }
+  body:not(.started) #panel-chat { position: static; height: auto; }
+  .chat-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 .6rem 1rem 0; }
+  #composer { position: static; margin-top: 0; padding-top: .9rem; }
+}
+.session-notice { margin: 0; padding: 1.1rem 1.3rem; border-radius: var(--radius); background: var(--suit); font-size: .9rem; line-height: 1.55; }
+.intro h1 { font-family: var(--display); text-transform: uppercase; letter-spacing: .2em; color: var(--crystal);
+            font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.3; margin: .4rem 0 .8rem; }
+.intro > p { margin: 0 0 2rem; }
+.intro > h2 { margin-bottom: 1rem; }
+body.started .intro { display: none; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1.1rem; }
+.tile { display: flex; flex-direction: column; gap: .45rem; width: 100%; height: 100%; text-align: left; cursor: pointer;
+        padding: 1.35rem 1.4rem; border-radius: var(--radius); border: 0; }
+.tile { background: var(--suit); color: var(--steel); }
+.tile:hover { box-shadow: 0 0 0 1px var(--steel) inset; }
+.tile .t { font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; color: var(--crystal); }
+.tile .d { font-size: .9rem; line-height: 1.45; color: var(--steel-muted); }
+
+.log { display: flex; flex-direction: column; gap: 1rem; }
+.log:empty { display: none; }
+.msg { padding: 1rem 1.25rem; border-radius: var(--radius); max-width: 94%; overflow-wrap: anywhere; white-space: pre-wrap; }
+.msg .who { display: block; margin-bottom: .3rem; font-size: .7rem; }
+.msg .who.osso { display: flex; align-items: center; gap: .5rem; margin-bottom: .55rem; font-size: .74rem; }
+.msg .who-mark { width: 18px; height: 18px; display: block; flex: none; }
+.msg.user { align-self: flex-end; background: var(--suit); color: var(--crystal); border: 1px solid var(--line); border-bottom-right-radius: 4px; }
+.msg.assistant { align-self: flex-start; background: var(--suit); color: var(--steel); border-bottom-left-radius: 4px; }
+.msg.caseline { align-self: stretch; max-width: none; padding: .5rem 0; border-top: 1px solid var(--line); border-radius: 0; font-size: .92rem; white-space: normal; }
+.wait { display: flex; align-items: center; gap: .6rem; margin: 0; color: var(--steel); font-size: .92rem; }
+.wait::before { content: ""; flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--caution); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+
+/* The AI line stays with the input on every screen width: the composer is
+   sticky, and the line has no close control (operator, 28-09-2026). */
+#composer { position: sticky; bottom: 0; z-index: 15; background: var(--espresso); padding: .6rem 0 .5rem; margin-top: auto; }
+#chat-form { display: flex; gap: .6rem; align-items: flex-end; background: var(--suit); border: 1px solid var(--edge); border-radius: var(--radius); padding: .6rem; }
+#chat-form:focus-within { border-color: var(--crystal); outline: 2px solid var(--crystal); outline-offset: 2px; }
+#chat-input { flex: 1; padding: .4rem .55rem; border: 0; background: transparent; color: var(--crystal); resize: vertical; outline: none; min-height: 3.2rem; line-height: 1.5; }
+#chat-input::placeholder { color: var(--steel-muted); }
+.ai-notice { margin: .45rem .2rem 0; font-size: .78rem; line-height: 1.4; color: var(--steel-muted); text-align: center; }
+.ai-notice .short { display: none; }
+
+/* ---------- the case file: one white panel, generous and quiet ---------- */
+.panel { position: sticky; top: calc(var(--bars-top) + 1.25rem); max-height: calc(100dvh - var(--bars-top) - var(--head-h, 0px) - 2rem); overflow: auto;
+         border-radius: var(--radius); padding: 2.25rem 2.5rem 2.5rem; overscroll-behavior: contain; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.panel-actions, #case-actions:not(.hidden) { display: flex; flex-wrap: wrap; gap: .5rem; }
+.panel-actions .btn { min-height: 40px; padding: .45rem 1rem; font-size: .7rem; }
+
+.cf-section { padding-top: 2.25rem; }
+.cf-section > h3 { margin: 0 0 1rem; }
+.cf-empty { font-size: .9rem; color: var(--steel-muted); margin: 0; }
+.facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; font-size: .93rem; }
+.facts p { margin: 0; overflow-wrap: anywhere; }
+.facts .asked { color: var(--steel-muted); font-size: .84rem; margin-bottom: .2rem;
+                display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.facts .asked strong { color: inherit; }
+.facts.full .asked { display: block; -webkit-line-clamp: none; }
+.facts .answer { color: var(--crystal); }
+.cand { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.cand > li { padding: 1.15rem 1.3rem; border-radius: var(--radius); background: var(--sunk); }
+.cand .head { display: flex; justify-content: space-between; gap: .6rem; align-items: baseline; }
+.cand .title { font-size: .9rem; margin: .35rem 0 0; }
+.thresholds { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; gap: .5rem; font-size: .88rem; }
+.thresholds li { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: baseline; }
+.more { margin-top: .8rem; font-size: .88rem; }
+.more summary { cursor: pointer; color: var(--steel-muted); min-height: 32px; }
+.tag { font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .66rem; white-space: nowrap;
+       padding: .12rem .55rem; border-radius: 999px; border: 1px solid currentColor; }
+.tag.met, .tag.matched { color: var(--clear); }
+.tag.not_met { color: var(--listed); }
+.tag.open { color: var(--caution); }
+.tested { display: grid; gap: 1.1rem; }
+blockquote { margin: 0; padding: 1rem 1.2rem; background: var(--sunk); border-left: 2px solid var(--steel-muted);
+             border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: .9rem; overflow-wrap: anywhere; }
+blockquote .row { display: flex; justify-content: space-between; gap: .6rem; align-items: baseline; margin-bottom: .45rem; }
+.provision { white-space: pre-line; }
+.expl { margin-top: .5rem; }
+.verdict-line { display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: baseline; margin: 0 0 .9rem;
+                font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .92rem; }
+.verdict-line .code, .verdict-line .dest { font-family: var(--mono); text-transform: none; letter-spacing: 0; }
+.verdict-line .dest { font-family: var(--sans); font-size: .85rem; color: var(--steel-muted); }
+.status.listed, .status.sanctions { color: var(--listed); }
+.status.not_listed, .status.gea { color: var(--clear); }
+.status.needs_expert, .status.individual { color: var(--caution); }
+.missing { margin: 0 0 .9rem; font-size: .9rem; }
+.missing ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+.caveats { font-size: .84rem; color: var(--steel-muted); margin: .9rem 0 0; }
+.disclaimer { font-size: .84rem; margin: .7rem 0 0; }
+.licensing-q { margin-top: .9rem; }
+.licensing-q .q { margin: 0 0 .9rem; color: var(--crystal); }
+.licensing-options { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; }
+.licensing-options select { flex: 1 1 13rem; min-height: 44px; }
+.answered { font-size: .9rem; margin: 0 0 .5rem; }
+/* the answers recorded in the case file (operator, 29-09-2026): the question
+   in full, the answer at reading size, and a Change button that looks like one */
+.qa { display: grid; gap: .4rem; padding: 1rem 0; border-top: 1px solid var(--line); }
+.qa:first-child { border-top: 0; padding-top: 0; }
+.qa-q { margin: 0; font-size: .95rem; line-height: 1.5; }
+.qa-q strong { color: inherit; }
+.qa-a { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.qa-a strong { color: var(--crystal); font-size: 1rem; }
+.qa .change { min-height: 34px; padding: .3rem .9rem; font-size: .66rem; }
+.qa.editing { background: var(--sunk); margin: 0 -1rem; padding: 1rem; border-radius: var(--radius-sm); border-top-color: transparent; }
+.qa-note { font-size: .85rem; color: var(--steel-muted); }
+/* the confirm step (30-09-2026): the answers the model filled in, each with its own Change button */
+.confirm-rows { list-style: none; margin: .9rem 0 0; padding: 0; display: grid; gap: .7rem; white-space: normal; }
+.confirm-rows li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; font-size: .95rem; line-height: 1.5; }
+.confirm-rows strong { color: var(--crystal); }
+.confirm-rows .change { min-height: 34px; padding: .3rem .9rem; font-size: .66rem; }
+.next-in-chat { margin: 1rem 0 0; font-size: .92rem; color: var(--steel-muted); }
+
+/* a question asked in the interview: its options as buttons under it */
+.msg.ask .chips { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1rem; white-space: normal; }
+.chip { min-height: 40px; padding: .45rem 1.05rem; border-radius: 999px; border: 1px solid var(--edge); background: transparent;
+        color: var(--crystal); font: inherit; font-size: .92rem; line-height: 1.35; cursor: pointer; text-align: left; }
+.chip:hover { border-color: var(--crystal); background: var(--tint); }
+.chip.primary { background: var(--crystal); color: var(--suit); border-color: var(--crystal); }
+.chip.primary:hover { background: var(--steel); border-color: var(--steel); }
+.chip.quiet { color: var(--steel-muted); }
+.chip:disabled { opacity: .5; cursor: default; }
+.msg.ask .chips select { flex: 1 1 13rem; min-height: 40px; }
+.msg .legal { margin-top: .9rem; font-size: .86rem; white-space: normal; }
+.msg .legal summary { cursor: pointer; color: var(--steel-muted); min-height: 32px; }
+.msg .legal blockquote { margin-top: .5rem; }
+.pathway { margin-top: 1.2rem; }
+.review-cta { margin: 1rem 0 0; font-size: .92rem; }
+
+/* skeletons: while the next piece of the case is being worked out */
+.skel { display: grid; gap: .5rem; margin-top: .4rem; }
+.skel span { display: block; height: .8rem; border-radius: 6px; background: var(--tint); }
+.skel span:nth-child(2) { width: 82%; } .skel span:nth-child(3) { width: 64%; }
+@media (prefers-reduced-motion: no-preference) {
+  .skel span { background: linear-gradient(90deg, var(--tint) 0%, rgba(127, 110, 100, .16) 50%, var(--tint) 100%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ---------- notices: the budget, the region ---------- */
+.notice { border-radius: var(--radius); padding: 1.5rem 1.6rem; margin-bottom: 2rem; background: var(--suit); color: var(--steel); }
+.notice h2 { font-family: var(--display); font-size: 1rem; letter-spacing: .06em; color: var(--crystal); margin: 0 0 .4rem; }
+.notice p { margin: 0 0 1rem; }
+
+/* ---------- the memo: the case as one white document ---------- */
+.memo-view { max-width: 50rem; margin: 0 auto; }
+.memo { border-radius: var(--radius); padding: 3rem 3.25rem; }
+.memo .kind { color: var(--steel-muted); }
+.memo h1 { font-family: var(--display); text-transform: uppercase; letter-spacing: .2em; color: var(--crystal); font-size: 1.4rem; margin: .4rem 0 0; }
+.memo-meta { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1.25rem; font-size: .85rem; margin: 1.4rem 0 0; }
+.memo-meta dt { color: var(--steel-muted); }
+.memo-meta dd { margin: 0; }
+.memo h2 { font-family: var(--display); text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; color: var(--crystal); margin: 2.4rem 0 .9rem; }
+.memo p { margin: 0 0 .7rem; }
+.memo .facts { font-size: .92rem; }
+.memo-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2.5rem; }
+
+/* ---------- browse: Annex I as a tree ---------- */
+.browse { max-width: 56rem; margin: 0 auto; display: grid; gap: .9rem; }
+.tree { display: grid; gap: 1rem; }
+.category { border-radius: var(--radius); }
+.tree summary { cursor: pointer; display: flex; gap: .9rem; align-items: baseline; padding: 1rem 1.3rem; min-height: 44px; }
+.tree summary .n { font-family: var(--display); letter-spacing: .1em; color: var(--crystal); white-space: nowrap; }
+.tree summary .count { margin-left: auto; color: var(--steel-muted); font-size: .85rem; }
+.group { margin: 0 1.3rem; border-top: 1px solid var(--line); }
+.group > summary { padding: .8rem 0; }
+.group:last-child { margin-bottom: .8rem; }
+.entries { display: grid; gap: .5rem; padding: 0 0 1rem; }
+.entry { background: var(--sunk); border-radius: var(--radius-sm); }
+.entry > summary { display: block; padding: .7rem 1rem; font-family: var(--mono); font-size: .86rem; color: var(--crystal); }
+.entry pre { white-space: pre-wrap; overflow-wrap: break-word; font-family: var(--mono); font-size: .82rem; margin: 0; padding: 0 1rem 1rem; }
+.entry .param { background: rgba(133, 96, 15, .12); border-radius: 3px; }
+mark { background: var(--caution); color: var(--suit); border-radius: 2px; }
+
+/* ---------- Pro: the waitlist, after the memo and in the footer ---------- */
+.pro-note { margin: 1.5rem 0 0; padding: 1.4rem 1.6rem; border-radius: var(--radius); background: var(--suit);
+            display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; align-items: center; justify-content: space-between; }
+.pro-note p { margin: 0; font-size: .92rem; }
+.pro-note .label { display: block; margin-bottom: .2rem; }
+.waitlist { width: min(34rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow: auto; border: 0;
+            border-radius: var(--radius); padding: 2rem 2.2rem;
+            --steel: #3f342f; --crystal: #1b1c1c; --suit: #ffffff; --steel-muted: rgba(63, 52, 47, .8);
+            --line: rgba(63, 52, 47, .12); --tint: rgba(63, 52, 47, .05); --sunk: #f6f3f0; --edge: #857a74;
+            --listed: #a8392f; --clear: #2e6b3c; --caution: #85600f;
+            background: var(--suit); color: var(--steel); }
+.waitlist::backdrop { background: rgba(27, 28, 28, .6); }
+.notice-dialog p:not(.kind) { color: var(--steel); line-height: 1.6; margin: 0 0 1rem; }
+.notice-dialog .btn { margin-top: .5rem; min-width: 8rem; }
+.wl-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.wl-head .kind { color: var(--steel-muted); }
+.waitlist h2 { font-family: var(--display); text-transform: uppercase; letter-spacing: .16em; color: var(--crystal); font-size: 1.1rem; margin: 1rem 0 1rem; }
+.wl-features { margin: 0 0 1.6rem; padding-left: 1.2rem; display: grid; gap: .3rem; font-size: .95rem; }
+#wl-form { display: grid; gap: .5rem; }
+#wl-form > label { font-size: .88rem; color: var(--crystal); margin-top: .4rem; }
+#wl-form .opt { color: var(--steel-muted); }
+#wl-form .field { background: var(--suit); color: var(--crystal); }
+.wl-consent { display: flex; gap: .6rem; align-items: flex-start; font-size: .92rem; color: var(--crystal); margin: .6rem 0 0; min-height: 24px; }
+.wl-consent input { width: 1.1rem; height: 1.1rem; margin: .2rem 0 0; accent-color: var(--crystal); flex: none; }
+.wl-note { font-size: .84rem; color: var(--steel-muted); margin: .2rem 0 .6rem; }
+#wl-send { justify-self: start; }
+.wl-status { margin: .4rem 0 0; font-size: .92rem; min-height: 1.4em; }
+.wl-status.error { color: var(--listed); }
+.wl-done { font-size: .98rem; color: var(--crystal); margin: 0; }
+
+/* ---------- How accurate is it? ---------- */
+.accuracy { max-width: 46rem; margin: 3rem auto 0; padding: 0 2rem; font-size: .92rem; }
+.accuracy .acc-figure { font-size: 1.05rem; color: var(--crystal); margin: .8rem 0; }
+.accuracy .acc-gaps-h { margin-top: 1.2rem; }
+.accuracy ul { margin: .5rem 0 1rem; padding-left: 1.2rem; display: grid; gap: .35rem; }
+.acc-teaser { margin: -1rem 0 2rem; font-size: .92rem; color: var(--steel-muted); }
+
+/* ---------- "Was this right?" and the opt-in save ---------- */
+.feedback { margin-top: 1.4rem; padding: 1.1rem 1.2rem; border-radius: var(--radius-sm); background: var(--sunk); display: grid; gap: .6rem; }
+.fb-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.fb-row .btn, .feedback > .btn { min-height: 40px; padding: .4rem 1rem; font-size: .7rem; justify-self: start; }
+.fb-note { font-size: .84rem; color: var(--steel-muted); margin: 0; }
+.fb-note.error { color: var(--listed); }
+.feedback-done { margin: 1.2rem 0 0; font-size: .9rem; }
+.save-case { margin-top: 2rem; padding: 1.1rem 1.2rem; border-radius: var(--radius-sm); background: var(--sunk); display: grid; gap: .4rem; }
+.save-case .wl-consent { margin: 0; color: var(--crystal); }
+#security { margin-top: 2.5rem; }
+
+/* ---------- Pro in the header, the paused banner, the Browse view (28-09-2026) ---------- */
+.pro-btn { display: inline-flex; align-items: center; min-height: 36px; padding: .35rem .9rem; margin-left: .75rem; cursor: pointer;
+           border: 1px solid var(--steel); border-radius: var(--radius-sm); background: transparent; color: var(--crystal);
+           font-family: var(--display); text-transform: uppercase; letter-spacing: .14em; font-size: .7rem; white-space: nowrap; }
+.pro-btn:hover { border-color: var(--crystal); background: var(--crystal); color: var(--suit); }
+.topbar-end { display: flex; align-items: center; }
+.paused { border-left: 3px solid var(--caution); }
+.paused p { margin: 0; line-height: 1.6; }
+.paused .first { color: var(--crystal); }
+body.view-browse #accuracy, body.view-browse #gaps, body.view-browse #security, body.view-browse #budget-banner { display: none; }
+
+/* ---------- footer ---------- */
+footer { margin-top: 3rem; padding: 1.6rem 2rem 1.8rem; background: var(--espresso); border-top: 1px solid var(--hairline); text-align: center; color: var(--steel-muted); font-size: .82rem; }
+footer p { margin: 0 auto .35rem; max-width: 46rem; }
+footer a { color: var(--steel); }
+
+/* ---------- privacy and terms: the same frame, one column ---------- */
+body.legal main { max-width: 46rem; }
+body.legal main > h1 { font-family: var(--display); color: var(--crystal); text-transform: uppercase; letter-spacing: .2em; font-size: clamp(1.3rem, 3.8vw, 1.9rem); line-height: 1.25; margin: .5rem 0 1.4rem; }
+body.legal main > h2 { font-family: var(--display); font-size: 1.12rem; line-height: 1.4; letter-spacing: .03em; color: var(--crystal); margin: 2.2rem 0 .6rem; }
+body.legal main > p strong, body.legal main li strong { font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+body.legal main ul { padding-left: 1.25rem; }
+body.legal main li { margin-bottom: .35rem; }
+
+.sheet-tab { display: none; }
+
+/* ---------- phones and narrow windows: one column, the case file as a sheet ---------- */
+@media (max-width: 900px) {
+  :root { --topbar-h: 52px; --cap: 9px; }
+  .topbar-inner { padding: 0 1rem; gap: .5rem; }
+  .brand .export { letter-spacing: .45em; margin-left: .7em; }
+  .topnav { gap: 0; }
+  .topnav a { font-size: .66rem; letter-spacing: .08em; padding: .75rem .3rem; }
+  .topbar .pro-btn { min-height: 36px; padding: .3rem .7rem; font-size: 0; margin-left: .4rem; }
+  .topbar .pro-btn::before { content: "Pro"; font-size: .64rem; }
+  .menu > summary { font-size: .66rem; letter-spacing: .1em; padding: .7rem .4rem; }
+  .page-head-inner { padding: 1.6rem 1rem 1rem; }
+  .page-sub { font-size: .92rem; }
+  main { padding: 1.5rem 1rem 6rem; }
+  .workspace { grid-template-columns: 1fr; gap: 0; }
+  #panel-chat { min-height: 0; gap: 1.1rem; }
+  .chat-scroll { gap: 1.1rem; }
+  .session-notice { font-size: .84rem; padding: .9rem 1rem; }
+  .intro > p { margin-bottom: 1.4rem; }
+  .tiles { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .tile { padding: 1rem; }
+  #composer { bottom: 3.5rem; box-shadow: 0 -10px 20px rgba(0, 0, 0, .25); }
+  body:not(.started) #composer { position: static; box-shadow: none; }
+  .ai-notice .long { display: none; }
+  .ai-notice .short { display: inline; }
+  #chat-input { font-size: 16px; } /* no iOS zoom on focus */
+  .licensing-options select { font-size: 16px; }
+  #search { font-size: 16px; }
+  /* the case file becomes a sheet that pulls up over the interview */
+  .panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 40; max-height: 88vh; border-radius: var(--radius) var(--radius) 0 0;
+           padding: 1.4rem 1.35rem 0; transform: translateY(100%); visibility: hidden; transition: transform .25s ease-out, visibility 0s .25s;
+           box-shadow: 0 -12px 30px rgba(0, 0, 0, .45); }
+  .panel.open { transform: none; visibility: visible; transition: transform .25s ease-out; }
+  .panel { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+  .cf-section { padding-top: 1.75rem; }
+  #close-sheet { display: inline-flex; }
+  .sheet-tab { display: flex; justify-content: space-between; align-items: center; gap: .75rem; position: fixed; left: 0; right: 0; bottom: 0; z-index: 35;
+               min-height: 3.5rem; padding: .5rem 1rem calc(.5rem + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--line);
+               background: var(--suit); color: var(--steel); cursor: pointer; text-align: left; font-size: .85rem; }
+  .sheet-tab .grab { width: 2rem; height: 4px; border-radius: 2px; background: var(--edge); flex: none; }
+  .sheet-tab #sheet-summary { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  body.sheet-open { overflow: hidden; }
+  .memo { padding: 1.75rem 1.35rem; }
+  .memo-meta { grid-template-columns: 1fr; gap: 0; }
+  .memo-meta dd { margin-bottom: .5rem; }
+  footer { padding-bottom: 5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- print: once there is a classification, the memo alone ---------- */
+@media print {
+  @page { margin: 18mm 16mm; }
+  body { background: #fff; color: #000; font-size: 10.5pt; display: block; }
+  body.has-memo > *:not(main), body.has-memo main > *:not(#memo-view) { display: none !important; }
+  body.has-memo #memo-view { display: block !important; max-width: none; }
+  .memo { --steel: #000; --crystal: #000; --steel-muted: #333; --sunk: #f3f3f3; --listed: #000; --clear: #000; --caution: #000;
+          background: #fff; color: #000; padding: 0; border-radius: 0; }
+  .memo h2 { break-after: avoid; }
+  .facts .asked { display: block; -webkit-line-clamp: none; }
+  .memo blockquote { break-inside: avoid; border-left-color: #666; }
+  .memo-actions, .pro-note, .no-print { display: none !important; }
+}
+
+
+/* ---------- the start and the side panel (operator, 29-09-2026) ----------
+   Before a case: one centred column, a large title, one line, the text box,
+   in the manner of Apple's and Anthropic's pages. During a case: the interview
+   in the middle and the case file as a slimmer side panel that can be hidden. */
+body:not(.started) .page-head-inner { text-align: center; padding-top: clamp(3rem, 12vh, 8rem); padding-bottom: 2.2rem; }
+body:not(.started) .page-head h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); letter-spacing: .22em; margin-bottom: 1.2rem; }
+body:not(.started) .page-sub { margin: 0 auto; max-width: 38rem; font-size: 1.08rem; line-height: 1.65; color: var(--steel); }
+body:not(.started) .workspace { grid-template-columns: minmax(0, 44rem); justify-content: center; }
+body:not(.started) .acc-teaser { text-align: center; margin: 1.6rem 0 0; font-size: .92rem; }
+body.started .acc-teaser { display: none; }
+body:not(.started) #panel-chat { gap: 0; }
+body:not(.started) #chat-form { border-radius: 22px; padding: .75rem .75rem .75rem 1rem; box-shadow: 0 18px 50px rgba(0, 0, 0, .28); }
+body:not(.started) #chat-input { min-height: 4.2rem; font-size: 1.05rem; }
+body:not(.started) .ai-notice { margin-top: .8rem; }
+body.started .page-head-inner { padding: 1.4rem 2rem 1rem; }
+body.started .page-head h1 { font-size: 1.15rem; letter-spacing: .2em; margin: 0; }
+body.started .page-sub { display: none; }
+.btn.send { width: 44px; min-width: 44px; height: 44px; padding: 0; border-radius: 50%; flex: none; }
+.btn.send svg { display: block; }
+.show-case { display: none; }
+@media (min-width: 901px) {
+  .workspace { grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem); gap: 2.2rem; }
+  .panel { padding: 1.8rem 1.8rem 2rem; }
+  .panel-head .btn { min-height: 34px; }
+  body.started.case-hidden .workspace { grid-template-columns: minmax(0, 48rem); justify-content: center; }
+  body.case-hidden #panel-case { display: none; }
+  body.started.case-hidden .show-case { display: inline-flex; position: fixed; right: max(2rem, calc((100vw - 80rem) / 2 + 2rem)); top: calc(var(--bars-top) + 1rem); z-index: 25;
+    min-height: 36px; padding: .35rem 1rem; font-size: .7rem; background: var(--espresso); }
+}
+
+
+/* ---------- accessibility pass, WCAG 2.2 AA (29-09-2026) ---------- */
+/* skip link: off screen until it takes focus */
+.skip-link { position: absolute; left: .75rem; top: -4rem; z-index: 100; padding: .7rem 1.1rem; border-radius: var(--radius-sm);
+             background: #ffffff; color: #1b1c1c; font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .76rem; }
+.skip-link:focus { top: .75rem; outline: 2px solid #1b1c1c; outline-offset: 2px; box-shadow: 0 0 0 4px #ffffff; }
+main:focus, [tabindex="-1"]:focus { outline: none; }
+/* the top menu is a white panel: the page's white focus ring would vanish on it */
+.menu-list :focus-visible { outline-color: #1b1c1c; outline-offset: -2px; }
+/* the dialogs are white too: their tokens already give a dark ring; the OK button keeps one against the white */
+.waitlist :focus-visible { outline-color: #1b1c1c; }
+
+/* ---------- case file: the entries a threshold form is checking, compact (29-09-2026) ---------- */
+.cand.compact { gap: .35rem; }
+.cand.compact > li { padding: .6rem .9rem; display: grid; grid-template-columns: auto 1fr; gap: .15rem .8rem; align-items: baseline; }
+.cand.compact .title { margin: 0; font-size: .86rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ---------- case file: recorded questions, short with the full text on demand (29-09-2026) ---------- */
+.qa-q .q-short { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qa-q .q-full { display: none; }
+.qa-q.open .q-short { display: none; }
+.qa-q.open .q-full { display: inline; }
+.qa .q-toggle { justify-self: start; font-size: .82rem; color: var(--steel-muted); min-height: 24px; }
+@media print {
+  .qa-q .q-short { display: none; }
+  .qa-q .q-full { display: inline; }
+  .q-toggle { display: none; }
+}
+
+/* ---------- phones: tap targets (29-09-2026) ----------
+   44px for the controls a thumb has to hit (chips, Hide, Change, Show full
+   question, the Pro button, the brand link); 32px rows for the footer's own
+   link row. Links inside a sentence are exempt (WCAG 2.5.8) and left alone. The
+   code links in the case file grow their hit area with padding and a negative
+   margin, so the list does not get taller. */
+@media (max-width: 900px) {
+  .brand { min-height: 44px; }
+  .topbar .pro-btn { min-height: 44px; }
+  .chip { min-height: 44px; }
+  #close-sheet { min-height: 44px; }
+  .qa .change { min-height: 44px; }
+  .qa .q-toggle { min-height: 44px; display: inline-flex; align-items: center; }
+  .msg .legal summary { min-height: 44px; display: flex; align-items: center; }
+  .cand .code { display: inline-block; padding: .7rem 0; margin: -.7rem 0; }
+  footer p:first-child a, footer p:first-child .linkish { display: inline-block; padding: .55rem .35rem; }
+}
