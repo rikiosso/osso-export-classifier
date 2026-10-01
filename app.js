@@ -1489,7 +1489,9 @@
   });
   if (!noticeSeen()) {
     const d = $("notice");
-    const open = () => { if (d.open) return; if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", ""); };
+    // once per load: the 7 s fallback reopened it after OK (01-10-2026)
+    let noticeOpened = false;
+    const open = () => { if (noticeOpened) return; noticeOpened = true; if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", ""); };
     // a modal's backdrop sits above everything, the intro too: wait for it
     // (01-10-2026), and never longer than 7 s, so the disclosure always shows
     if (document.documentElement.classList.contains("intro-on")) {

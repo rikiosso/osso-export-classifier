@@ -2,23 +2,36 @@
 
 > A free web tool that classifies a product or technology against Annex I of Regulation (EU) 2021/821, the EU dual-use control list, and shows which export authorisation applies. Every result quotes the regulation word for word. Not legal advice: results must be reviewed by a qualified professional.
 
-Live at https://osso.global/. Run by OSSO GLOBAL TECH, S.L. (Madrid). The classifier's code is proprietary; the page and the benchmark are public.
+Live at https://osso.global/. Run by OSSO GLOBAL TECH, S.L. (Madrid, Spain), built by Ricardo Álvarez-Ossorio Castro. The classifier's code is proprietary; the page and the benchmark are public.
 
 ## What it does
 
-- You describe a product in plain words and answer a few questions from its datasheet.
-- The result is one of three outcomes: listed, not listed, or needs expert review.
-- Each provision the answer rests on is quoted verbatim from the consolidated regulation, and the card names the export authorisation that applies.
-- All of Annex I can be browsed and searched without starting a chat.
-- Free: 5 chats a day per visitor.
+- You describe a product in plain words and answer a few questions from its datasheet, such as a frequency, a resolution, a depth rating or an output power.
+- The result is one of three outcomes: listed, not listed, or needs expert review. When the description does not settle the question, it says so and shows what to check instead of guessing.
+- Each provision the answer rests on is quoted verbatim from the consolidated regulation, and every quote is checked against the text of Annex I by code before the result is shown.
+- The card names the export authorisation that applies, including whether a Union General Export Authorisation (EU001 to EU008) is available for the destination. That licensing step is decided by code from tables of the regulation, not by the AI model.
+- A memo of the case can be downloaded.
+- All of Annex I (384 entries) can be browsed and searched without starting a chat.
+- Free: 5 chats a day per visitor. No account, no cookies, no analytics.
+
+## How it differs from a list lookup
+
+A lookup tool finds an entry when you already know its number. This classifier starts from a description of the product, asks only for the figures the control list turns on, and ends on a classification with the provisions quoted. The Annex I text it uses is kept current by Osso Export Watch, which tracks every change to the list.
 
 ## Accuracy
 
-- [Benchmark](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md): 100 products, the method, every case with its expected answer, and every run. The latest run got 92 of 100 right; the 8 misses were all "needs expert review" where a definite answer was expected, and none was a wrong listed or not-listed result.
-- [Known failures](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/known-failures.md): every miss and what was done about it.
-- [Threshold tables](https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/tables.md): the product families where fixed thresholds from the regulation decide the answer, with an example question and case for each.
+- [Benchmark](https://osso.global/benchmark/benchmark.md): 100 products, the method, every case with its expected answer, and every run. The latest run got 92 of 100 right; the 8 misses were all "needs expert review" where a definite answer was expected, and none was a wrong listed or not-listed result.
+- [Known failures](https://osso.global/benchmark/known-failures.md): every miss and what was done about it.
+- [Threshold tables](https://osso.global/benchmark/tables.md): the product families where fixed thresholds from the regulation decide the answer, with an example question and case for each.
+
+## Common questions
+
+- What is a dual-use item? An item that can be used for both civilian and military purposes. Annex I of Regulation (EU) 2021/821 lists them by category, from nuclear materials to information security.
+- Is it free? Yes. There are 5 free chats a day, and browsing the whole of Annex I needs no chat.
+- Is it legal advice? No. Every result must be reviewed by a qualified professional before it is relied on.
 
 ## Related
 
-- [Osso Export Watch](https://watch.osso.global/): tracks changes to the EU dual-use list.
+- [Osso Export Watch](https://watch.osso.global/): tracks changes to the EU dual-use list and to US and EU export controls.
+- [Regulation (EU) 2021/821 on EUR-Lex](https://eur-lex.europa.eu/eli/reg/2021/821/oj)
 - [Privacy](https://osso.global/privacy.html) and [terms](https://osso.global/terms.html).
