@@ -178,6 +178,12 @@ body.started .intro { display: none; }
    sticky, and the line has no close control (operator, 28-09-2026). */
 #composer { position: sticky; bottom: 0; z-index: 15; background: var(--espresso); padding: .6rem 0 .5rem; margin-top: auto; }
 #chat-form { display: flex; gap: .6rem; align-items: flex-end; background: var(--suit); border: 1px solid var(--edge); border-radius: var(--radius); padding: .6rem; }
+/* the box is locked while a question has buttons, or by a pause (01-10-2026) */
+#chat-form:has(textarea:disabled) { opacity: .5; }
+#chat-form:has(textarea:disabled) textarea { cursor: not-allowed; }
+.new-case { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; background: var(--suit); border: 1px solid var(--edge); border-radius: var(--radius); padding: .6rem .6rem .6rem .9rem; }
+.new-case p { margin: 0; flex: 1 1 14rem; font-size: .85rem; opacity: .8; }
+.new-case .btn { order: 2; }
 #chat-form:focus-within { border-color: var(--crystal); outline: 2px solid var(--crystal); outline-offset: 2px; }
 #chat-input { flex: 1; padding: .4rem .55rem; border: 0; background: transparent; color: var(--crystal); resize: vertical; outline: none; min-height: 3.2rem; line-height: 1.5; }
 #chat-input::placeholder { color: var(--steel-muted); }

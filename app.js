@@ -203,6 +203,7 @@
     b.className = "notice paused";
     b.setAttribute("role", "status");
     b.replaceChildren(el("p", {}, el("span", { class: "first", text: first }), " " + rest));
+    S.blocked = true;
     input.disabled = true;
     sendBtn.disabled = true;
     input.placeholder = "The assistant is paused. Browse Annex I stays fully available.";
@@ -223,6 +224,7 @@
       ...(withWaitlist ? [el("button", { class: "btn ghost", type: "button", onclick: openWaitlist, text: "Join the waitlist" })] : []));
     b.classList.remove("hidden");
     if (disable) {
+      S.blocked = true;
       input.disabled = true;
       sendBtn.disabled = true;
       for (const t of document.querySelectorAll(".tile")) t.disabled = true;
@@ -634,6 +636,28 @@
     // (review of 85a51cf, 30-09-2026)
     S.live.node.querySelectorAll(".confirm-rows .change").forEach((b) => b.remove());
     S.live = null;
+    syncComposer();
+  }
+
+  // The text box follows the case (operator, 01-10-2026): free chat is a Pro
+  // feature, so a question with buttons is answered with the buttons ("Don't
+  // know" is always one of them, so nobody is stuck), and a finished case
+  // locks the box and offers a new case instead of more chat.
+  const newCase = $("new-case");
+  function caseDone() {
+    if (S.pathway) return true;
+    if (!S.verdict) return false;
+    return !S.licensing || !(S.licensing.questions || []).some((q) => q.answer === undefined);
+  }
+  function syncComposer() {
+    if (S.blocked) return; // a pause or region notice owns the composer
+    const done = !S.live && !S.busy && caseDone();
+    const locked = !!S.live || done;
+    input.disabled = locked;
+    sendBtn.disabled = locked || !!S.busy;
+    input.placeholder = S.live ? "Pick one of the options above" : S.started ? "Answer the question, or add a fact" : input.placeholder;
+    form.classList.toggle("hidden", done);
+    newCase.classList.toggle("hidden", !done);
   }
 
   // the visitor's pick: their reply in the interview, then the round trip
@@ -692,6 +716,7 @@
         quoteBlock(q.quote.gea_id || q.quote.path, q.quote.verbatim_quote, "")) : null);
     messagesEl.appendChild(div);
     S.live = { id: q.id, node: div };
+    syncComposer();
     if (follow) reveal(div);
   }
 
@@ -737,6 +762,7 @@
       list, chips);
     messagesEl.appendChild(div);
     S.live = { id: "table.confirm", node: div };
+    syncComposer();
     if (follow) reveal(div);
   }
 
@@ -1087,6 +1113,7 @@
     waitEl.classList.toggle("hidden", !busy);
     if (!busy) S.stage = null;
     renderCase();
+    syncComposer();
   }
 
   function setWait(text) {
@@ -1186,6 +1213,7 @@
           followCase("cf-licensing");
         }
         licensingToChat();
+        syncComposer();
       } else {
         setBusy(false);
         const reason = data.reason || "unknown";
@@ -1235,6 +1263,9 @@
     if (S.busy) return;
     exchange(S.tableForm ? "Checking your answers against the thresholds…" : "Checking the authorisation against the corpus…", true);
   }
+
+  // a fresh page is a clean case: nothing of the old one can leak into it
+  $("new-case-btn").addEventListener("click", () => location.reload());
 
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();

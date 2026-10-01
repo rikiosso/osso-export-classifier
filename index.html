@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://osso.global/img/social-preview.png?v=5" data-url="site:img/social-preview.png?v=5">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="osso-favicon.png">
-<link rel="stylesheet" href="style.css?v=29">
+<link rel="stylesheet" href="style.css?v=30">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the main content</a>
@@ -85,6 +85,10 @@
             placeholder="Describe the item: what it is, its performance figures, materials, intended use…"></textarea>
           <button id="send" class="btn send" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </form>
+        <div id="new-case" class="new-case hidden">
+          <button id="new-case-btn" class="btn" type="button">New case</button>
+          <p>Download the memo first if you need it: a new case clears this one.</p>
+        </div>
         <p class="ai-notice"><span class="long">This assistant is an AI (Claude, by Anthropic). Its answers can be wrong
           and must be reviewed by a qualified professional before they are relied on, used or shared.</span>
           <span class="short">AI (Claude, by Anthropic): answers can be wrong. A qualified professional must review them before any use.</span></p>
@@ -225,6 +229,6 @@
 
 <script src="config.js?v=11"></script>
 <script src="case-model.js?v=3"></script>
-<script src="app.js?v=41"></script>
+<script src="app.js?v=42"></script>
 </body>
 </html>
