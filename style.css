@@ -536,3 +536,20 @@ main:focus, [tabindex="-1"]:focus { outline: none; }
   .cand .code { display: inline-block; padding: .7rem 0; margin: -.7rem 0; }
   footer p:first-child a, footer p:first-child .linkish { display: inline-block; padding: .55rem .35rem; }
 }
+
+/* ---------- the site intro (intro.js, 01-10-2026) ---------- */
+/* the clip's brown as WebKit draws it (#463937, measured 01-10-2026; ffmpeg decodes #3b302e), so the bars on a tall screen are invisible */
+#intro { position: fixed; inset: 0; z-index: 1000; background: #463937; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity .6s ease; }
+#intro video { width: 100%; height: 100%; object-fit: contain; }
+/* wide screens: fill the window, no bars (the mark sits mid-frame, the crop only takes empty brown) */
+@media (min-aspect-ratio: 4/3) { #intro video { object-fit: cover; } }
+html.intro-on body > :not(#intro) { opacity: 0; }
+body > * { transition: opacity .6s ease; }
+/* the exit (Riki, 01-10-2026): the logo drops and fades in place, never sideways
+   (the clip's own ending slid the mark left; the clip now stops on the still logo),
+   then the brown gives way to the page */
+#intro video { transition: transform .5s ease-in, opacity .45s ease-in; }
+html.intro-out #intro video { transform: translateY(28px); opacity: 0; }
+html.intro-out #intro { opacity: 0; pointer-events: none; transition-delay: .3s; }
+.intro-skip { position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); background: transparent; color: var(--steel); border: 1px solid rgba(209, 209, 209, .45); border-radius: 999px; padding: .4rem 1rem; font: inherit; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.intro-skip:hover, .intro-skip:focus-visible { color: var(--crystal); border-color: var(--crystal); }

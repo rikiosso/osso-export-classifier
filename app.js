@@ -1489,7 +1489,13 @@
   });
   if (!noticeSeen()) {
     const d = $("notice");
-    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+    const open = () => { if (d.open) return; if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", ""); };
+    // a modal's backdrop sits above everything, the intro too: wait for it
+    // (01-10-2026), and never longer than 7 s, so the disclosure always shows
+    if (document.documentElement.classList.contains("intro-on")) {
+      document.addEventListener("osso:intro-done", open, { once: true });
+      setTimeout(open, 7000);
+    } else open();
   }
 
   // ---------- start ----------
