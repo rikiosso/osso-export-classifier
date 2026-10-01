@@ -64,7 +64,7 @@
 <h2>Recipients and transfers outside the EU</h2>
 <ul>
   <li><strong>Anthropic</strong> (the AI model), under its Data Processing Addendum (effective 24 February 2025), which incorporates the EU Standard Contractual Clauses, Modules Two and Three. Anthropic deletes API inputs and outputs within 30 days, save exceptions it describes (for example where the law requires longer retention); it keeps them for up to 2 years if its safety systems flag them as violating its Usage Policy. Its <a href="https://www.anthropic.com/legal/commercial-terms">Commercial Terms</a> (effective 17 June 2025, section B) say that "Anthropic may not train models on Customer Content from Services". By default Anthropic may process data in the United States, Europe, Asia and Australia, and stores it in the United States. See <a href="https://www.anthropic.com/legal/data-processing-addendum">Anthropic's DPA</a>, <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data">its retention article</a> and <a href="https://www.anthropic.com/legal/privacy">its privacy policy</a>.</li>
-  <li><strong>Cloudflare</strong> (the Worker and its key-value store), under its customer Data Processing Addendum (version 6.4, effective 3 April 2026). Cloudflare is certified under the EU-U.S. Data Privacy Framework and relies on Standard Contractual Clauses if that lapses. See <a href="https://www.cloudflare.com/cloudflare-customer-dpa/">Cloudflare's DPA</a> and <a href="https://www.cloudflare.com/privacypolicy/">privacy policy</a>.</li>
+  <li><strong>Cloudflare</strong> (the Worker, its key-value store and its logs), under its customer Data Processing Addendum (version 6.4, effective 3 April 2026). Cloudflare is certified under the EU-U.S. Data Privacy Framework and relies on Standard Contractual Clauses if that lapses. See <a href="https://www.cloudflare.com/cloudflare-customer-dpa/">Cloudflare's DPA</a> and <a href="https://www.cloudflare.com/privacypolicy/">privacy policy</a>.</li>
   <li><strong>GitHub</strong> (hosting of this page and of the control-list data), under its privacy statement (effective 27 April 2026). GitHub is certified under the EU-U.S. Data Privacy Framework and also relies on Standard Contractual Clauses. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</li>
 </ul>
 <p>The page loads no other third-party resource: its fonts are served from this site.</p>
@@ -75,12 +75,13 @@
   <li>The hashed IP counters expire after 26 hours.</li>
   <li>Waitlist signups are kept until Pro launches or you withdraw your consent (see "The Pro waitlist").</li>
   <li>Outcome records, with any feedback, are kept for 12 months from their last update; saved cases for 12 months, or until you untick the box or ask for their deletion.</li>
+  <li>Technical log lines are kept for 7 days (see "Logs").</li>
   <li>Spend totals, which contain amounts only, expire after 26 hours (daily) and 32 days (monthly).</li>
   <li>Anthropic, Cloudflare and GitHub keep data under their own policies, linked above.</li>
 </ul>
 
 <h2>Logs</h2>
-<p>The Worker writes technical log lines: timings, which checks fired, and validation errors. They do not include your IP address or your messages, but a validation error can quote a short part of the model's draft, which may reflect what you typed. This project does not switch on Cloudflare's stored Workers Logs, so these lines are only visible live, to the operator.</p>
+<p>The Worker writes technical log lines: timings, cost, which checks fired, and validation errors. They do not include your IP address or your messages, but a validation error can quote a short part of the model's draft, which may reflect what you typed. Cloudflare stores these lines for 7 days (Workers Logs), visible only to the operator, and then deletes them. Cloudflare's own per-request logs are not switched on.</p>
 
 <h2>Cookies and storage</h2>
 <p>There are no accounts. The page and the Worker set no cookies. The page stores nothing in your browser, with one exception: a tester link (<code>?tester=…</code>) keeps its key in the tab's session storage until the tab is closed.</p>
