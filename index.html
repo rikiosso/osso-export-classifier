@@ -167,9 +167,11 @@
   <p>The details, and your rights, are in the <a href="privacy.html">Privacy notice</a>.</p>
 </section>
 
-<section id="accuracy" class="accuracy hidden" aria-labelledby="acc-h">
+<!-- the figure and gaps are written here too, so a reader without JavaScript (most AI crawlers) sees them;
+     app.js rewrites both from config.js BENCHMARK, and a test keeps the two equal (02-10-2026) -->
+<section id="accuracy" class="accuracy" aria-labelledby="acc-h">
   <h2 id="acc-h" class="label">How accurate is it?</h2>
-  <p class="acc-figure" id="acc-figure"></p>
+  <p class="acc-figure" id="acc-figure">92 out of 100 real products classified correctly in the published benchmark, 30 September 2026: 37 of 39 deliberately hard edge cases and 55 of 61 everyday products.</p>
   <p>Correct means the status matches (listed, not listed, or needs expert review), every expected entry is on the
     card, and the licensing outcome matches where one is expected. Each expected answer was drafted from the product's
     public datasheet by one AI model and checked against the text of the regulation by a second; the calls they
@@ -178,9 +180,14 @@
   <p>Every case, expected answer and run is published in <a href="https://github.com/rikiosso/osso-export-classifier/blob/main/benchmark/benchmark.md">the benchmark</a>.</p>
 </section>
 
-<section id="gaps" class="accuracy hidden" aria-labelledby="gaps-h">
+<section id="gaps" class="accuracy" aria-labelledby="gaps-h">
   <h2 id="gaps-h" class="label">Known gaps</h2>
-  <ul id="acc-gaps"></ul>
+  <ul id="acc-gaps">
+    <li>All eight misses were cautious ones: the tool said needs expert review where the expected answer was a definite listed or not listed. None gave a wrong listed or not-listed result.</li>
+    <li>Where no threshold table exists yet (15 of the 100 cases), the AI interview decides, as before, and is less predictable than the tables.</li>
+    <li>The same product does not always get the same answer: between two runs of the same cases, some flipped each way. Read the score as about 92, not exactly 92.</li>
+    <li>The score is on the benchmark's own 100 cases, and its earlier misses were used to build the tables. Every card must be reviewed by a qualified professional before use.</li>
+  </ul>
 </section>
 
 <dialog id="notice" class="waitlist notice-dialog" aria-labelledby="notice-title" aria-describedby="notice-ai notice-data">
