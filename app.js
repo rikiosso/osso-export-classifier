@@ -194,7 +194,7 @@
   // start of the next month.
   const PAUSED = {
     day: ["The assistant is paused.", "Today's free capacity has been used. It resumes at 00:00 UTC. Browse Annex I stays fully available."],
-    month: ["The assistant is paused.", "This month's free capacity has been used. It resumes at the start of next month. Browse Annex I stays fully available."],
+    month: ["The assistant is paused.", "This month's free usage has been consumed by the public. It resumes at the start of next month. Browse Annex I stays fully available."],
     service: ["The assistant is paused.", "A temporary service limit has been reached. Please try again later. Browse Annex I stays fully available."],
   };
   function showPaused(kind) {
@@ -1223,6 +1223,8 @@
           showPaused("day");
           refreshStatus();
         }
+        // Anthropic's own spend limit (live, 23-10-2026): it lifts at the start of next month
+        else if (reason === "monthly_budget_exhausted") showPaused("month");
         else if (reason === "service_paused") showPaused("service");
         // 28-09-2026: reworded from "The assistant cannot classify this item
         // automatically" so a visitor is told plainly WHO declined — the
